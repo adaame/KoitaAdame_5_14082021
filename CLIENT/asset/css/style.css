@@ -14,10 +14,40 @@ html {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 body {
-    line-height: 1;
+  line-height: 1;
+  justify-content: center;
+  align-items: center;
+}
+/* .liste{
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    background-color: red;
+    width: 100%;
+
+
+  } */
+ul.container {
+  width: 100%;
+}
+ul.container > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
+  width: 100%;
   }
-  
+#liste li {
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40rem;
+  background-color: rebeccapurple;
+  box-shadow: 0.1em 0.1em 1.1em lightgray;
+  background: white;
+  text-align: center;
+}
+ul#liste:nth-child(2) {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+#liste img {
+  width: 100%;
+}
