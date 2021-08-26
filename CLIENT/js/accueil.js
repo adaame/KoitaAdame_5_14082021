@@ -12,13 +12,14 @@ function fetchData() {
       const html = data
         .map((produit) => {
           return `
+          <a href="./produit.html?id=${produit._id}">
           <div class="produit">
           <p><img src="${produit.imageUrl}" alt="${produit.name}"></p>
           <p>Modele :${produit.name}</p>
           <p>Description:${produit.description}</p>
           <p>Prix:${produit.price}€</p>
-          <a href="./produit.html?id=${produit._id}"><button id="btn">En savoir</button></a>
           </div>
+          </a>
           `;
         })
         .join(""); // permet d'avoir un vide entre chaque article evite la virgule du tableau

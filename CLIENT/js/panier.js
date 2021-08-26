@@ -1,15 +1,3 @@
-//RECUPERATION DE LA CHAINE DE REQUETE DANS L'URL = LE ? ET L'ID
-const queryString = window.location.search; // recup l'id apres le ? dans l'url
-//console.log(queryString); //chainederequete)
-//Méthode 1 --slice pour suprimée une element entre un indice de début et un indice de fin
-// const theId = queryString.slice(1);
-// console.log(theId);
-
-const urlSearchParams = new URLSearchParams(queryString); // constructeur qui prend en parametre mon url
-console.log(urlSearchParams);
-const id = urlSearchParams.get("id"); //recup mot "id" dans l'url
-console.log(id);
-
 const listeProduit = document.querySelector(".listeProduit");
 function fetchData() {
   fetch(`http://localhost:3000/api/cameras/${id}`) //apel a l'api qui retourne une promese qui ce resoud seul si l'url est correcte
