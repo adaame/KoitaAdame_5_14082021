@@ -13,8 +13,8 @@ function getProduit() {
 
 function oneProduit() {
   const id = getProduit();
-  console.log(id);
-  fetch(`http://localhost:3000/api/cameras/?=${id}`) //apel a l'api qui retourne une promese qui ce resoud seul si l'url est correcte
+  console.log(`ìd`, id);
+  fetch(`http://localhost:3000/api/cameras/`) //apel a l'api qui retourne une promese qui ce resoud seul si l'url est correcte
     .then((response) => {
       if (!response.ok) {
         //si reponse different de ok
@@ -23,11 +23,11 @@ function oneProduit() {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
-      const html = data
-        .map((produit) => {
-          return `
-          <a href="./produit.html?id=${produit._id}">
+      console.log(`data`, data);
+      data.map((produit) => {
+        if (produit._id === id) {
+          console.log(produit);
+          const html = `
           <div class="produit">
           <p><img src="${produit.imageUrl}" alt="${produit.name}"></p>
           <p>Modele :${produit.name}</p>
@@ -36,14 +36,16 @@ function oneProduit() {
           </div>
           <form>
           <label for="option-produit></label>
-          <select name="option-produit" id="option produit">
+          <select name="option-produit" id="optionproduit">
           <option value="">${produit.lenses}</option>
           </select>
           </form>
-          </a>
           `;
-        })
-        .join(""); // permet d'avoir un vide entre chaque article evite la virgule du tableau
+          document
+            .querySelector("#listeProduit")
+            .insertAdjacentHTML("afterbegin", html);
+        }
+      });
     })
 
     .catch((error) => {
@@ -51,3 +53,5 @@ function oneProduit() {
     });
 }
 oneProduit();
+//  const isProduitSelectionne = response.find((data)=> data._id === id)
+//console.log(isProduitSelectionne);

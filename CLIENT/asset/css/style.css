@@ -48,6 +48,6 @@ ul#liste:nth-child(2) {
   flex-wrap: wrap;
   text-align: center;
 }
-#liste img {
+#liste #listeProduit, img {
   width: 100%;
 }
