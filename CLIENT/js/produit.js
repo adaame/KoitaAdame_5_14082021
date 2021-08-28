@@ -1,5 +1,4 @@
 //RECUPERATION DE LA CHAINE DE REQUETE DANS L'URL = LE ? ET L'ID
-
 //console.log(queryString); //chainederequete)
 //Méthode 1 --slice pour suprimée une element entre un indice de début et un indice de fin
 // const theId = queryString.slice(1);
@@ -26,25 +25,29 @@ function oneProduit() {
       console.log(`data`, data);
       data.map((produit) => {
         if (produit._id === id) {
-          console.log(produit);
+          console.log(`produit`, produit);
           const html = `
           <div class="produit">
           <p><img src="${produit.imageUrl}" alt="${produit.name}"></p>
           <p>Modele :${produit.name}</p>
           <p>Description:${produit.description}</p>
-          <p>Prix:${produit.price}€</p>
+          <p>Prix:${produit.price / 100}€</p>
           </div>
           <form>
-          <label for="option-produit></label>
-          <select name="option-produit" id="optionproduit">
-          <option value="">${produit.lenses}</option>
+          <label for="option-produit>ddd</label>
+          <select name="option-produit" id="option-produit">
+          <option value="produit.lenses">${produit.lenses}</option></a>
           </select>
           </form>
+          <button ="btn_panier"> Ajouter au panier</button>
           `;
+
           document
             .querySelector("#listeProduit")
             .insertAdjacentHTML("afterbegin", html);
         }
+        const btn_envoyer = document.querySelector("#btn_panier");
+        console.log(` vous avez ajouté au panier le produit ${produit.name}`);
       });
     })
 
@@ -53,5 +56,3 @@ function oneProduit() {
     });
 }
 oneProduit();
-//  const isProduitSelectionne = response.find((data)=> data._id === id)
-//console.log(isProduitSelectionne);

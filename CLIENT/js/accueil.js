@@ -16,8 +16,7 @@ function fetchData() {
           <div class="produit">
           <p><img src="${produit.imageUrl}" alt="${produit.name}"></p>
           <p>Modele :${produit.name}</p>
-          <p>Description:${produit.description}</p>
-          <p>Prix:${produit.price}€</p>
+          <p>Prix:${produit.price / 100}€</p>
           </div>
           </a>
           `;
