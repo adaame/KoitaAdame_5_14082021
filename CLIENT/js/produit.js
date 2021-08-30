@@ -34,10 +34,12 @@ function oneProduit() {
           <p>Prix:${produit.price / 100}€</p>
           </div>
           <form>
-          <label for="option-produit>ddd</label>
-          <select name="option-produit" id="option-produit">
-          <option value="produit.lenses">${produit.lenses}</option></a>
-          </select>
+          <label for="lenses"></label>
+  
+          <select name="lenses" id="lenses">
+              <option value="">--Choisiez votre produit--</option>
+              <option value="${produit.lenses}">${produit.lenses}</option>
+              </select>
           </form>
           <button ="btn_panier"> Ajouter au panier</button>
           `;
@@ -46,8 +48,13 @@ function oneProduit() {
             .querySelector("#listeProduit")
             .insertAdjacentHTML("afterbegin", html);
         }
+
         const btn_envoyer = document.querySelector("#btn_panier");
-        console.log(` vous avez ajouté au panier le produit ${produit.name}`);
+        console.log(
+          ` vous avez ajouté au panier le produit ${
+            (`produit cliqué`, produit.name)
+          }`
+        );
       });
     })
 
