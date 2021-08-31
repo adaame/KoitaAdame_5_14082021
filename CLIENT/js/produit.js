@@ -4,14 +4,14 @@
 // const theId = queryString.slice(1);
 // console.log(theId);
 
-function getProduit() {
+function getProduitId() {
   const queryString = window.location.search; // recup l'id apres le ? dans l'url
   const urlSearchParams = new URLSearchParams(queryString); // constructeur qui prend en parametre mon url
   return urlSearchParams.get("id"); //retourn la valeur de l'id dans l'url
 }
 
 function oneProduit() {
-  const id = getProduit();
+  const id = getProduitId();
   console.log(`ìd`, id);
   fetch(`http://localhost:3000/api/cameras/`) //apel a l'api qui retourne une promese qui ce resoud seul si l'url est correcte
     .then((response) => {
@@ -22,10 +22,10 @@ function oneProduit() {
       return response.json();
     })
     .then((data) => {
-      console.log(`data`, data);
+      // console.log(`data`, data);
       data.map((produit) => {
         if (produit._id === id) {
-          console.log(`produit`, produit);
+          // console.log(`produit`, produit);
           const html = `
           <div class="produit">
           <p><img src="${produit.imageUrl}" alt="${produit.name}"></p>
@@ -33,28 +33,47 @@ function oneProduit() {
           <p>Description:${produit.description}</p>
           <p>Prix:${produit.price / 100}€</p>
           </div>
-          <form>
+          <form id ="choix">
           <label for="lenses"></label>
   
-          <select name="lenses" id="lenses">
+          <select name="option-produit" id="option-produit">
               <option value="">--Choisiez votre produit--</option>
               <option value="${produit.lenses}">${produit.lenses}</option>
+              <option value="choix2">Choix 2</option>
               </select>
           </form>
-          <button ="btn_panier"> Ajouter au panier</button>
+          <button id="btn-envoyer" type="submit" name="btn-envoyer"> Ajouter au panier</button>
           `;
 
           document
             .querySelector("#listeProduit")
             .insertAdjacentHTML("afterbegin", html);
-        }
 
-        const btn_envoyer = document.querySelector("#btn_panier");
-        console.log(
-          ` vous avez ajouté au panier le produit ${
-            (`produit cliqué`, produit.name)
-          }`
-        );
+          const btn_envoyerAuPanier = document.querySelector("#btn-envoyer");
+          console.log(btn_envoyerAuPanier);
+          btn_envoyerAuPanier.addEventListener("click", (event) => {
+            event.preventDefault();
+            let optionProduit = {
+              nomProduits: produit.name,
+              idProduitSelectionne: produit._id,
+              option_produit: choixForm,
+              // quantite: 1,
+              prix: produit.price / 100,
+            };
+            console.log(optionProduit);
+          });
+        }
+        //------ gestion du panier -----//
+        const idForm = document.querySelector("#option-produit");
+        const choixForm = produit.lenses;
+
+        // console.log(`choix de l'option`, choixForm);
+
+        // console.log(
+        //   ` vous avez ajouté au panier le produit ${
+        //     (`produit cliqué`, produit.name)
+        //   }`
+        // );
       });
     })
 
