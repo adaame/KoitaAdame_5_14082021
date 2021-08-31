@@ -48,7 +48,13 @@ function oneProduit() {
           document
             .querySelector("#listeProduit")
             .insertAdjacentHTML("afterbegin", html);
+          // choix lentille selectionné
+          const idForm = document.querySelector("#option-produit");
+          const choixForm = produit.lenses;
 
+          console.log(`choix de l'option`, choixForm);
+
+          //recupération information au click
           const btn_envoyerAuPanier = document.querySelector("#btn-envoyer");
           console.log(btn_envoyerAuPanier);
           btn_envoyerAuPanier.addEventListener("click", (event) => {
@@ -57,17 +63,12 @@ function oneProduit() {
               nomProduits: produit.name,
               idProduitSelectionne: produit._id,
               option_produit: choixForm,
-              // quantite: 1,
+              quantite: 1,
               prix: produit.price / 100,
             };
             console.log(optionProduit);
           });
         }
-        //------ gestion du panier -----//
-        const idForm = document.querySelector("#option-produit");
-        const choixForm = produit.lenses;
-
-        // console.log(`choix de l'option`, choixForm);
 
         // console.log(
         //   ` vous avez ajouté au panier le produit ${
