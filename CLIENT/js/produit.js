@@ -12,7 +12,7 @@ function getProduitId() {
 
 function oneProduit() {
   const id = getProduitId();
-  console.log(`ìd`, id);
+  // console.log(`ìd`, id);
   fetch(`http://localhost:3000/api/cameras/`) //apel a l'api qui retourne une promese qui ce resoud seul si l'url est correcte
     .then((response) => {
       if (!response.ok) {
@@ -23,7 +23,7 @@ function oneProduit() {
     })
     .then((data) => {
       // console.log(`data`, data);
-      data.map((produit) => {
+      data.forEach(function (produit) {
         if (produit._id === id) {
           // console.log(`produit`, produit);
           const html = `
@@ -34,47 +34,51 @@ function oneProduit() {
           <p>Prix:${produit.price / 100}€</p>
           </div>
           <form id ="choix">
-          <label for="lenses"></label>
+          <label name="option-produit" for="lenses"></label>
   
           <select name="option-produit" id="option-produit">
-              <option value="">--Choisiez votre produit--</option>
-              <option value="${produit.lenses}">${produit.lenses}</option>
-              <option value="choix2">Choix 2</option>
+              <option value="
+              ">--Choisiez votre produit--</option>
               </select>
           </form>
           <button id="btn-envoyer" type="submit" name="btn-envoyer"> Ajouter au panier</button>
           `;
-
           document
             .querySelector("#listeProduit")
             .insertAdjacentHTML("afterbegin", html);
-          // choix lentille selectionné
-          const idForm = document.querySelector("#option-produit");
-          const choixForm = produit.lenses;
 
-          console.log(`choix de l'option`, choixForm);
+          produit.lenses.forEach(function (lense) {
+            let option = document.createElement("option");
+            option.classList.add("list-group-item");
+            option.textContent = lense;
+            document.querySelector("#option-produit").appendChild(option);
+          });
+          console.log(`produit.lenses haut`, produit.lenses);
 
-          //recupération information au click
+          //Ecouter du bouton puis envoi au panier
           const btn_envoyerAuPanier = document.querySelector("#btn-envoyer");
+
           console.log(btn_envoyerAuPanier);
           btn_envoyerAuPanier.addEventListener("click", (event) => {
             event.preventDefault();
-            let optionProduit = {
+
+            // recuperation choix lentille selectionné
+            let reception = [];
+            const choixLentille = produit.lenses;
+            for (i = 0; i < choixLentille.length; i++) {
+              reception += idOption = document.querySelector("#option-produit");
+            }
+            //récupération valeur au click
+            let optionProduits = {
               nomProduits: produit.name,
               idProduitSelectionne: produit._id,
-              option_produit: choixForm,
+              lentille: idOption.value,
               quantite: 1,
               prix: produit.price / 100,
             };
-            console.log(optionProduit);
+            console.log(`valeur récupéré au click`, optionProduits);
           });
         }
-
-        // console.log(
-        //   ` vous avez ajouté au panier le produit ${
-        //     (`produit cliqué`, produit.name)
-        //   }`
-        // );
       });
     })
 
