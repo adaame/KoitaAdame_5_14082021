@@ -77,6 +77,45 @@ function oneProduit() {
               prix: produit.price / 100,
             };
             console.log(`valeur récupéré au click`, optionProduits);
+            //---------------LocalStorage----------------//
+            //produit enregistrer dans le localstorage
+            //permet de lire
+            let produitDansLocalStorage = JSON.parse(
+              localStorage.getItem("produit")
+            );
+            console.log(produitDansLocalStorage);
+
+            //Confirmation du produit avec fenetre pop up
+            const popUpconfirProduit = () => {
+              if (
+                window.confirm(
+                  `${produit.name} lentille: ${idOption.value} à bien été ajouté au pannier. Consultez le panier OK ou revenir à l'accueil ANNULUER`
+                )
+              ) {
+                window.location.href = "./panier.html"; // si true ici
+              } else {
+                window.location.href = "./accueil.html"; // si annule redirection
+              }
+            };
+            //si il y a des produit dans le localStorage
+            if (produitDansLocalStorage) {
+              produitDansLocalStorage.push(optionProduits); //1 ajouts dans tableau
+              localStorage.setItem(
+                "produit",
+                JSON.stringify(produitDansLocalStorage)
+              ); //dans produit on recupere tt objet ajouter au panier lisible en js
+              popUpconfirProduit();
+            }
+            //Si pas de produit enregistere dans localStorage
+            else {
+              produitDansLocalStorage = [];
+              produitDansLocalStorage.push(optionProduits);
+              localStorage.setItem(
+                "produit",
+                JSON.stringify(produitDansLocalStorage) //setItem-> interface du storage qui accueil nos clé valeur ici (optionProduits) accueillit dans "produit" convertis en js avec stringify
+              );
+              popUpconfirProduit();
+            }
           });
         }
       });
