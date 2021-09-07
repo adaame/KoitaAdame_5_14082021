@@ -53,7 +53,7 @@ function oneProduit() {
             option.textContent = lense;
             document.querySelector("#option-produit").appendChild(option);
           });
-          console.log(`produit.lenses haut`, produit.lenses);
+          console.log(`produit.lenses`, produit.lenses);
 
           //Ecouter du bouton puis envoi au panier
           const btn_envoyerAuPanier = document.querySelector("#btn-envoyer");
@@ -83,13 +83,12 @@ function oneProduit() {
             let produitDansLocalStorage = JSON.parse(
               localStorage.getItem("produit")
             );
-            console.log(produitDansLocalStorage);
 
             //Confirmation du produit avec fenetre pop up
             const popUpconfirProduit = () => {
               if (
                 window.confirm(
-                  `${produit.name} lentille: ${idOption.value} à bien été ajouté au pannier. Consultez le panier OK ou revenir à l'accueil ANNULUER`
+                  `${produit.name} lentille: ${idOption.value} à bien été ajouté au panier. Consultez le panier OK ou revenir à l'accueil annuler`
                 )
               ) {
                 window.location.href = "./panier.html"; // si true ici
@@ -97,23 +96,22 @@ function oneProduit() {
                 window.location.href = "./accueil.html"; // si annule redirection
               }
             };
-            //si il y a des produit dans le localStorage
-            if (produitDansLocalStorage) {
-              produitDansLocalStorage.push(optionProduits); //1 ajouts dans tableau
+            function ajoutProduitLocalStorage() {
+              produitDansLocalStorage.push(optionProduits); // ajouts article avec value, seletionnée par l'utilisateur dans item "produit"
               localStorage.setItem(
                 "produit",
                 JSON.stringify(produitDansLocalStorage)
-              ); //dans produit on recupere tt objet ajouter au panier lisible en js
+              ); //dans produit on recupere tout les objet ajouter au panier lisible en format js
+            }
+            //si il y a des produit dans le localStorage
+            if (produitDansLocalStorage) {
+              ajoutProduitLocalStorage();
               popUpconfirProduit();
             }
             //Si pas de produit enregistere dans localStorage
             else {
               produitDansLocalStorage = [];
-              produitDansLocalStorage.push(optionProduits);
-              localStorage.setItem(
-                "produit",
-                JSON.stringify(produitDansLocalStorage) //setItem-> interface du storage qui accueil nos clé valeur ici (optionProduits) accueillit dans "produit" convertis en js avec stringify
-              );
+              ajoutProduitLocalStorage();
               popUpconfirProduit();
             }
           });
