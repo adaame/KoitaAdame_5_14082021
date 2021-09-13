@@ -11,18 +11,23 @@ const afficherFormulaireHtml = () => {
   <form name="myForm" action="confirmation.html" method="post">
 
   <form method="POST" id="myform">
-  <label for="nom">Votre Nom</label>
-  <input type="text" name="nom" id="nom" required>
-  <span id="error-nom"></span>
-    <label for="prenom">Votre Prénom</label>
+
+    <label for="nom">Votre Nom</label><span id="error-nom"></span>
+    <input type="text" name="nom" id="nom" required>
+  
+
+    <label for="prenom">Votre Prénom</label><span id="error-prenom"></span>
     <input type="text" name="prenom" id="prenom" required>
-    <span id="error-prenom"></span>
-    <label for="adresse">Votre adresse</label>
+   
+
+    <label for="adresse">Votre adresse</label> <span id="error-adresse"></span>
     <input type="text" name="adresse" id="adresse" required>
-    <span id="error-adresse"></span>
+   
+
     <label for="codepostal">Votre Code Postal</label>
     <input type="text" name="codepostal" id="codepostal" required>
     <span id="error-codepostal"></span>
+
     <label for="ville">Votre Ville</label>
     <input type="text" name="ville" id="ville" required>
     <span id="error-ville"></span>
@@ -65,9 +70,15 @@ envoiFormulaire.addEventListener("click", (e) => {
 
   //-------Gestion validation du formulaire -----------//
   const textAlert = (value) => {
-    return `${value}: veuillez bien remplir le formulaire`;
+    return `${value}: Veuillez bien remplir le formulaire`;
   };
-  const regExNomPrenomVille = (value) => {
+  const regExNom = (value) => {
+    return /^([a-zA-Z]{3,20})?([-]{0,1})?([a-zA-Z]{3,20})$/.test(value);
+  };
+  const regExPrenom = (value) => {
+    return /^([a-zA-Z]{3,20})?([-]{0,1})?([a-zA-Z]{3,20})$/.test(value);
+  };
+  const regExVille = (value) => {
     return /^([a-zA-Z ]{3,20})$/.test(value);
   };
   const regExCodePostal = (value) => {
@@ -77,93 +88,132 @@ envoiFormulaire.addEventListener("click", (e) => {
     return /^[a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]$/.test(value);
   };
   const regExAdresse = (value) => {
-    return /^[a-z0-9*(é|è|à|ù)A-Z\d\s\-\,\#\.\+]$/.test(value);
+    return /^([a-z0-9*(é|è|à|ù)A-Z\d\s\-\,\#\.\+])$/.test(value);
   };
   const regExTelephone = (value) => {
     return /^[\+?\(?\d{2,4}\)?[\d\s-]{3,}$/.test(value);
   };
 
   //test verifie si ça correspond retour un bolean
-  function prenomControle() {
-    const lePrenom = formulaireValue.prenom;
-    if (regExNomPrenomVille(lePrenom)) {
+  function nomControle() {
+    const leNom = formulaireValue.nom;
+    if (regExNom(leNom)) {
+      document.querySelector("#error-nom").textContent = "";
+      return true;
     } else {
-      alert(textAlert("Prenom"));
+      document.querySelector("#error-nom").textContent =
+        "Veuillez remplir le champs";
+      alert(textAlert("Nom"));
     }
   }
 
-  function nomControle() {
-    const leNom = formulaireValue.nom;
-    if (regExNomPrenomVille(leNom)) {
+  function prenomControle() {
+    const lePrenom = formulaireValue.prenom;
+    if (regExPrenom(lePrenom)) {
+      document.querySelector("#error-prenom").textContent = "";
       return true;
     } else {
-      alert(textAlert("Nom"));
+      document.querySelector("#error-prenom").textContent =
+        "Veuillez remplir le champs";
+      alert(textAlert("Prenom"));
+      return false;
+    }
+  }
+  function adresseControle() {
+    const leAdresse = formulaireValue.adresse;
+    if (regExAdresse(leAdresse)) {
+      document.querySelector("#error-adresse").textContent = "";
+      return true;
+    } else {
+      document.querySelector("#error-adresse").textContent =
+        "Veuillez remplir le champs";
+      alert(textAlert("Adresse"));
+      return false;
+    }
+  }
+  function villeControle() {
+    const leAdresse = formulaireValue.adresse;
+    if (regExVille(leAdresse)) {
+      document.querySelector("#error-adresse").textContent = "";
+      return true;
+    } else {
+      document.querySelector("#error-adresse").textContent =
+        "Veuillez remplir le champs";
+      return false;
     }
   }
 
   function codePostalControle() {
     const codePostal = formulaireValue.codepostal;
     if (regExCodePostal(codePostal)) {
+      document.querySelector("#error-codepostale").textContent = "";
       console.log("TRUE");
       return true;
     } else {
-      alert(textAlert("le code postal doit être composé de 5 chiffres"));
+      document.querySelector("#error-codepostale").textContent =
+        "-- le code postal doit être composé de 5 chiffres";
       return false;
     }
   }
   function emailControle() {
     const email = formulaireValue.email;
-    if (regExemail(email)) {
+    if (regExEmail(email)) {
+      document.querySelector("#error-email").textContent = "";
       console.log("TRUE");
       return true;
     } else {
-      alert(textAlert("email non valide"));
+      document.querySelector("#error-email").textContent =
+        "Veuillez indiquer une adresse mail correcte";
       return false;
     }
   }
   function adresseControle() {
     const adresse = formulaireValue.adresse;
     if (regExAdresse(adresse)) {
+      document.querySelector("#error-adresse").textContent = "";
       console.log("TRUE");
       return true;
     } else {
-      alert(textAlert(`l'adresse n'est pas`));
+      document.querySelector("#error-adresse").textContent =
+        "Veuillez indiquer une adresse correcte";
       return false;
     }
   }
   function telephoneControle() {
     const telephone = formulaireValue.telephone;
     if (regExTelephone(telephone)) {
+      document.querySelector("#error-telephone").textContent = "";
       console.log("TRUE");
       return true;
     } else {
-      alert(textAlert(`l'telephone n'est pas`));
+      document.querySelector("#error-telephone").textContent = "";
       return false;
     }
   }
 
   //-------Fin - Gestion validation du formulaire -----------//
   if (
-    prenomControle() &&
     nomControle() &&
-    codePostalControle &&
-    adresseControle &&
-    emailControle &&
-    telephoneControle
+    prenomControle() &&
+    adresseControle() &&
+    villeControle() &&
+    codePostalControle() &&
+    emailControle() &&
+    telephoneControle()
   ) {
     // mettre formulaireValue dans localStorage
     localStorage.setItem("formulaireValue", JSON.stringify(formulaireValue));
   } else {
-    alert(`veuillez bien remplir le formulaire`);
+    alert(`Veuillez bien remplir le formulaire`);
   }
 
   console.log(`formulaireValue`, formulaireValue);
-  //recuperation des value du formulaire et mettre produit dans un objet pour envoyer au server
+  //recuperation des value du formulaire et  des produits les mettre dans un objet à envoyer vers le server
   const elmentAEnvoyer = {
     produitDansLocalStorage, //appareil selectionnée
     formulaireValue, // formulaire
   };
-  console.log(`element à envoyerrr`, elmentAEnvoyer);
+  console.log(`element à envoyer`, elmentAEnvoyer);
 });
 
 //---------mettre le contenu du localStorage dans les champs formulaire-----//
@@ -176,9 +226,13 @@ const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
 //fonction pour que le champs du formulaire soit remplis par les donnée du localstorage si elle sont enregistré au préalable
 function champsProvenantDuLocalStorage(input) {
-  document.querySelector(`#${input}`).value = dataLocalStorageObjet[input];
+  if (dataLocalStorageObjet == null) {
+    console.log(`la valeur du localStorage est nul`);
+  } else {
+    document.querySelector(`#${input}`).value = dataLocalStorageObjet[input];
+  }
 }
-champsProvenantDuLocalStorage("nom");
+champsProvenantDuLocalStorage("#nom");
 champsProvenantDuLocalStorage("prenom");
 champsProvenantDuLocalStorage("adresse");
 champsProvenantDuLocalStorage("codepostal");
