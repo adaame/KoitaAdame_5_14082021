@@ -134,10 +134,10 @@ envoiFormulaire.addEventListener("click", (e) => {
   function villeControle() {
     const leAdresse = formulaireValue.adresse;
     if (regExVille(leAdresse)) {
-      document.querySelector("#error-adresse").textContent = "";
+      document.querySelector("#error-ville").textContent = "";
       return true;
     } else {
-      document.querySelector("#error-adresse").textContent =
+      document.querySelector("#error-ville").textContent =
         "Veuillez remplir le champs";
       return false;
     }
@@ -167,18 +167,7 @@ envoiFormulaire.addEventListener("click", (e) => {
       return false;
     }
   }
-  function adresseControle() {
-    const adresse = formulaireValue.adresse;
-    if (regExAdresse(adresse)) {
-      document.querySelector("#error-adresse").textContent = "";
-      console.log("TRUE");
-      return true;
-    } else {
-      document.querySelector("#error-adresse").textContent =
-        "Veuillez indiquer une adresse correcte";
-      return false;
-    }
-  }
+
   function telephoneControle() {
     const telephone = formulaireValue.telephone;
     if (regExTelephone(telephone)) {
@@ -214,6 +203,17 @@ envoiFormulaire.addEventListener("click", (e) => {
     formulaireValue, // formulaire
   };
   console.log(`element à envoyer`, elmentAEnvoyer);
+
+  //Envoi de l'objet elmentAEnvoyer vers le serveur--
+
+  const prom1 = fetch("http://localhost:3000/api/cameras/", {
+    method: "POST",
+    body: JSON.stringify(elmentAEnvoyer),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  console.log(prom1);
 });
 
 //---------mettre le contenu du localStorage dans les champs formulaire-----//
